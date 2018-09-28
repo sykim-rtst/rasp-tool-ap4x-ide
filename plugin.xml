@@ -144,7 +144,8 @@
             contentProvider="kr.co.rtst.autosar.ap4x.ide.views.provider.AdaptiveAutosarResourceContentProvider"
             id="kr.co.rtst.autosar.ap4x.ide.navigator.content.AdaptiveAutosarResource"
             labelProvider="kr.co.rtst.autosar.ap4x.ide.views.provider.AdaptiveAutosarResourceDecoratingLabelProvider"
-            name="Adaptive Autosar Resource">
+            name="Adaptive Autosar Resource"
+            priority="highest">
          <triggerPoints>
             <and>
                <instanceof
@@ -165,7 +166,8 @@
             contentProvider="kr.co.rtst.autosar.ap4x.ide.views.provider.AdaptiveAutosarModelContentProvider"
             id="kr.co.rtst.autosar.ap4x.ide.navigator.content.AdaptiveAutosarModel"
             labelProvider="kr.co.rtst.autosar.ap4x.ide.views.provider.AdaptiveAutosarModelDecoratingLabelProvider"
-            name="Adaptive Autosar Model">
+            name="Adaptive Autosar Model"
+            priority="high">
          <triggerPoints>
             <and>
                <instanceof

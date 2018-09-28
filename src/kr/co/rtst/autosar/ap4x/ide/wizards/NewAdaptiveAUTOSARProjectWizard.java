@@ -11,10 +11,13 @@ import kr.co.rtst.autosar.ap4x.core.util.AdaptiveAutosarProjectUtil;
 
 public class NewAdaptiveAUTOSARProjectWizard extends BasicNewProjectResourceWizard implements INewWizard {
 	
-
+	private AdaptiveAutosarNewProjectWizardSecondPage page2;
+	
 	@Override
 	public void addPages() {
 		super.addPages();
+		page2 = new AdaptiveAutosarNewProjectWizardSecondPage();
+		addPage(page2);
 	}
 	
 	@Override
@@ -27,7 +30,9 @@ public class NewAdaptiveAUTOSARProjectWizard extends BasicNewProjectResourceWiza
 			IProject newProject = getNewProject();
 			if(newProject != null) {
 				for (int i = 0; i < AdaptiveAutosarProjectUtil.DEFAULT_TOP_DIR.length; i++) {
-					newProject.getFolder(AdaptiveAutosarProjectUtil.DEFAULT_TOP_DIR[i]).create(true, true, monitor);
+					if(page2.getProjectTypeSelection(i)) {
+						newProject.getFolder(AdaptiveAutosarProjectUtil.DEFAULT_TOP_DIR[i]).create(true, true, monitor);
+					}
 				}
 			}
 			
