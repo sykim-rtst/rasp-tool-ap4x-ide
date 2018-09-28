@@ -89,6 +89,14 @@
             category="kr.co.rtst.autosar.ap4x.ide"
             inject="true">
       </view>
+      <view
+            category="kr.co.rtst.autosar.ap4x.ide"
+            class="kr.co.rtst.autosar.ap4x.ide.views.AutosarPackageExportManagerView"
+            icon="icons/view_adaptiveconfnav.png"
+            id="kr.co.rtst.autosar.ap4x.ide.views.AutosarPackageExportManager"
+            name="AUTOSAR Package Export Manager"
+            restorable="true">
+      </view>
    </extension>
    
    <extension point="org.eclipse.ui.navigator.viewer">

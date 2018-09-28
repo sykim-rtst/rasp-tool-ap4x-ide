@@ -7,6 +7,7 @@ import org.eclipse.ui.IPerspectiveFactory;
 import org.eclipse.ui.console.IConsoleConstants;
 
 import kr.co.rtst.autosar.ap4x.ide.views.AdaptiveConfNavigator;
+import kr.co.rtst.autosar.ap4x.ide.views.AutosarPackageExportManagerView;
 
 public class PerspectiveFactory implements IPerspectiveFactory {
 	
@@ -35,7 +36,8 @@ public class PerspectiveFactory implements IPerspectiveFactory {
 		
 		IFolderLayout rightTop= layout.createFolder(LAYOUT_RIGHT_TOP, IPageLayout.RIGHT,(float)0.75, editorArea); //$NON-NLS-1$
 		rightTop.addView(IPageLayout.ID_OUTLINE);
-			
+		rightTop.addView(AutosarPackageExportManagerView.ID);
+		
 		
 		layout.addNewWizardShortcut(IArtopPerspectiveConstants.ID_AUTOSAR_NEW_PROJECT);
 		layout.addNewWizardShortcut(IArtopPerspectiveConstants.ID_AUTOSAR_NEW_FILE);
