@@ -11,13 +11,14 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.resources;bundle-version="3.13.0",
  org.eclipse.ui.navigator.resources;bundle-version="3.6.100",
  kr.co.rtst.autosar.ap4x.core;bundle-version="0.1.0",
- org.artop.aal.examples.common.ui;bundle-version="4.10.0",
  org.eclipse.ui.navigator;bundle-version="3.7.100",
  org.eclipse.ui.views.properties.tabbed;bundle-version="3.8.100",
  org.eclipse.ui.ide;bundle-version="3.14.0",
  kr.co.rtst.autosar.common.ui;bundle-version="0.1.0",
  org.artop.aal.gautosar;bundle-version="4.10.0",
- org.artop.aal.autosar445;bundle-version="4.10.0"
+ org.artop.aal.autosar445;bundle-version="4.10.0",
+ org.artop.aal.workspace.ui;bundle-version="4.10.0",
+ org.artop.aal.gautosar.services;bundle-version="4.10.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: kr.co.rtst.autosar.ap4x.ide
 Bundle-ActivationPolicy: lazy

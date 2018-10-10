@@ -27,11 +27,11 @@ public class AdaptiveAutosarModelLabelProvider extends LabelProvider implements 
 	@Override
 	public Image getImage(Object element) {
 		if(element instanceof IFile && ((IFile) element).getFileExtension().equals("aaswc")) {
-			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/nav_software.png");
+			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/swc/swc.png");
 		} else if(element instanceof GARPackage) {
-			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/nav_software.png");
+			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/swc/swc.png");
 		} else if(element instanceof AdaptiveApplicationSwComponentType) {
-			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/nav_software.png");
+			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/swc/swc.png");
 		}
 		return null;
 	}

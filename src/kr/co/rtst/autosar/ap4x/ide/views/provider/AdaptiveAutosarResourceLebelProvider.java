@@ -1,12 +1,11 @@
 package kr.co.rtst.autosar.ap4x.ide.views.provider;
 
 import org.eclipse.core.resources.IFolder;
-import org.eclipse.core.resources.IProject;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
 
-import kr.co.rtst.autosar.ap4x.core.util.AdaptiveAutosarProjectUtil;
+import kr.co.rtst.autosar.ap4x.core.model.IAdaptiveAutosarProject;
 import kr.co.rtst.autosar.ap4x.ide.IDEActivator;
 
 public class AdaptiveAutosarResourceLebelProvider extends LabelProvider implements ILabelProvider {
@@ -18,14 +17,8 @@ public class AdaptiveAutosarResourceLebelProvider extends LabelProvider implemen
 
 	@Override
 	public Image getImage(Object element) {
-		if(element instanceof IFolder && ((IFolder) element).getParent() instanceof IProject) {
-			if(AdaptiveAutosarProjectUtil.isSoftwareTopFolder(((IFolder)element).getName())) {
-				return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/nav_software.png");
-			} else if(AdaptiveAutosarProjectUtil.isServiceTopFolder(((IFolder)element).getName())) {
-				return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/nav_service.png");
-			} else if(AdaptiveAutosarProjectUtil.isMachineTopFolder(((IFolder)element).getName())) {
-				return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/nav_machine.png");
-			}
+		if(IAdaptiveAutosarProject.isAdaptiveAutosarTopFolder(element)) {
+			return IDEActivator.getDefault().getIdeImageRegistry().getImage("icons/"+IAdaptiveAutosarProject.getTopDirImageName(((IFolder)element).getName())+".png");
 		}
 		return null;
 	}

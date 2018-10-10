@@ -254,6 +254,7 @@
       <wizard
             category="kr.co.rtst.autosar.ap4x.ide.wizards.category"
             class="kr.co.rtst.autosar.ap4x.ide.wizards.NewAdaptiveAUTOSARProjectWizard"
+            finalPerspective="kr.co.rtst.autosar.ap4x.ide.perspective"
             hasPages="true"
             icon="icons/wizard_project.png"
             id="kr.co.rtst.autosar.ap4x.ide.adaptive.project"

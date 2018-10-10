@@ -1,50 +1,56 @@
 package kr.co.rtst.autosar.ap4x.ide.wizards;
 
+import java.net.URI;
+
+import org.artop.aal.common.metamodel.AutosarReleaseDescriptor;
+import org.artop.aal.workspace.ui.wizards.BasicAutosarProjectWizard;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.sphinx.emf.workspace.jobs.CreateNewModelProjectJob;
 import org.eclipse.ui.INewWizard;
-import org.eclipse.ui.wizards.newresource.BasicNewProjectResourceWizard;
+import org.eclipse.ui.dialogs.WizardNewProjectCreationPage;
 
-import kr.co.rtst.autosar.ap4x.core.util.AdaptiveAutosarProjectUtil;
+import kr.co.rtst.autosar.ap4x.core.model.IAdaptiveAutosarProject;
+import kr.co.rtst.autosar.ap4x.ide.wizards.job.CreateNewAdaptiveAutosarProjectJob;
 
-public class NewAdaptiveAUTOSARProjectWizard extends BasicNewProjectResourceWizard implements INewWizard {
+public class NewAdaptiveAUTOSARProjectWizard extends BasicAutosarProjectWizard/*BasicNewProjectResourceWizard*/ implements INewWizard {
+	
+	private final AdaptiveAutosarProjectCreationInfo projectInfo;
 	
 	private AdaptiveAutosarNewProjectWizardSecondPage page2;
 	
+	public NewAdaptiveAUTOSARProjectWizard() {
+		projectInfo = new AdaptiveAutosarProjectCreationInfo();
+	}
+	
+	public AdaptiveAutosarProjectCreationInfo getProjectInfo() {
+		return projectInfo;
+	}
+	
+	@Override
+	protected WizardNewProjectCreationPage createMainPage() {
+		return new AdaptiveAutosarNewProjectWizardMainPage(getProjectInfo());
+	}
+	
 	@Override
 	public void addPages() {
-		super.addPages();
-		page2 = new AdaptiveAutosarNewProjectWizardSecondPage();
+		mainPage = createMainPage();
+        Assert.isNotNull(mainPage);
+        addPage(mainPage);
+        
+		page2 = new AdaptiveAutosarNewProjectWizardSecondPage(getProjectInfo());
+		Assert.isNotNull(page2);
 		addPage(page2);
 	}
 	
 	@Override
-	public boolean performFinish() {
-		boolean result = super.performFinish();
-		try {
-			IProgressMonitor monitor = new NullProgressMonitor();
-			
-			// 최상위 폴더 생성
-			IProject newProject = getNewProject();
-			if(newProject != null) {
-				for (int i = 0; i < AdaptiveAutosarProjectUtil.DEFAULT_TOP_DIR.length; i++) {
-					if(page2.getProjectTypeSelection(i)) {
-						newProject.getFolder(AdaptiveAutosarProjectUtil.DEFAULT_TOP_DIR[i]).create(true, true, monitor);
-					}
-				}
-			}
-			
-			AdaptiveAutosarProjectUtil.addRTSTAdaptiveAutosarNature(getNewProject(), monitor);
-			
-			} catch (CoreException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
-		return result;
+	protected CreateNewModelProjectJob<AutosarReleaseDescriptor> createCreateNewModelProjectJob(String jobName, IProject project, URI location) {
+		CreateNewAdaptiveAutosarProjectJob job = new CreateNewAdaptiveAutosarProjectJob(jobName, project, location, (AutosarReleaseDescriptor)((AdaptiveAutosarNewProjectWizardMainPage)mainPage).getMetaModelVersionDescriptor(), getProjectInfo());
+        job.getImportedAutosarLibraries().addAll(((AdaptiveAutosarNewProjectWizardMainPage)mainPage).getImportedAutosarLibraryDescriptors());
+        return job;
 	}
 	
-
 }
