@@ -24,7 +24,6 @@ import org.eclipse.sphinx.platform.util.StatusUtil;
 
 import gautosar.ggenericstructure.ginfrastructure.GARPackage;
 import gautosar.ggenericstructure.ginfrastructure.GAUTOSAR;
-import kr.co.rtst.autosar.ap4x.core.artop.AutosarCoreModelRegistry;
 import kr.co.rtst.autosar.ap4x.core.model.IAdaptiveAutosarProject;
 import kr.co.rtst.autosar.ap4x.core.model.ProjectManager;
 import kr.co.rtst.autosar.ap4x.ide.IDEActivator;
@@ -60,6 +59,7 @@ public class CreateNewAdaptiveAutosarProjectJob extends CreateNewAutosarProjectJ
             if(projectInfo.isPredefinedArxml()) {
             	createPredefinedArxml(apProject, apProject.getProject().getFile(IAdaptiveAutosarProject.PREDEFINED_ARXML_NAME), monitor);
             }
+            createProjectArxml(apProject, apProject.getProject().getFile(IAdaptiveAutosarProject.USER_DEFINED_ARXML_NAME), monitor);
             if(projectInfo.getImportArxmlList() != null && !projectInfo.getImportArxmlList().isEmpty()) {
             	// TODO 병합
             }
@@ -93,8 +93,29 @@ public class CreateNewAdaptiveAutosarProjectJob extends CreateNewAutosarProjectJ
             autosar.gGetArPackages().add(arPackage);
         }
 		
-    	AutosarCoreModelRegistry.getInstance().putCoreModel(file, autosar);
-    	
+    	saveInitialModel(autosar, file, monitor);
+	}
+	
+	protected void createProjectArxml(IAdaptiveAutosarProject project, IFile file, IProgressMonitor monitor) {
+		
+		GAUTOSAR autosar = (GAUTOSAR)createInitialModel();
+		
+        IGAutosarFactoryService autosarFactory = getAutosarFactoryService();
+        if(autosarFactory != null)
+        {
+            GARPackage arPackage = autosarFactory.createGARPackage();
+            arPackage.gSetShortName(projectInfo.getTopPackageName() + "." + project.getApplications().getPackageName());
+            autosar.gGetArPackages().add(arPackage);
+            
+            arPackage = autosarFactory.createGARPackage();
+            arPackage.gSetShortName(projectInfo.getTopPackageName() + "." + project.getServices().getPackageName());
+            autosar.gGetArPackages().add(arPackage);
+            
+            arPackage = autosarFactory.createGARPackage();
+            arPackage.gSetShortName(projectInfo.getTopPackageName() + "." + project.getMachines().getPackageName());
+            autosar.gGetArPackages().add(arPackage);
+        }
+		
     	saveInitialModel(autosar, file, monitor);
 	}
 	
