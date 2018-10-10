@@ -7,6 +7,8 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.ui.model.BaseWorkbenchContentProvider;
 
+import kr.co.rtst.autosar.ap4x.core.model.IAdaptiveAutosarProject;
+
 public class AdaptiveAutosarResourceContentProvider /*extends BaseWorkbenchContentProvider*/ implements ITreeContentProvider {
 
 	@Override
@@ -16,33 +18,33 @@ public class AdaptiveAutosarResourceContentProvider /*extends BaseWorkbenchConte
 
 	@Override
 	public Object[] getChildren(Object parentElement) {
-		if(parentElement instanceof IProject){
-			try {
-				return ((IProject) parentElement).members();
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-		}
+//		if(parentElement instanceof IProject){
+//			try {
+//				return ((IProject) parentElement).members();
+//			} catch (CoreException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return null;
 	}
 
 	@Override
 	public Object getParent(Object element) {
-		if(element instanceof IResource) {
-			return ((IResource) element).getParent();
-		}
+//		if(element instanceof IResource) {
+//			return ((IResource) element).getParent();
+//		}
 		return null;
 	}
 
 	@Override
 	public boolean hasChildren(Object element) {
-		if(element instanceof IContainer) {
-			try {
-				return ((IContainer) element).members().length>0;
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-		}
+//		if(element instanceof IContainer) {
+//			try {
+//				return ((IContainer) element).members().length>0;
+//			} catch (CoreException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		return false;
 	}
 }
