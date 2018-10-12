@@ -18,7 +18,8 @@ Require-Bundle: org.eclipse.ui,
  org.artop.aal.gautosar;bundle-version="4.10.0",
  org.artop.aal.autosar445;bundle-version="4.10.0",
  org.artop.aal.workspace.ui;bundle-version="4.10.0",
- org.artop.aal.gautosar.services;bundle-version="4.10.0"
+ org.artop.aal.gautosar.services;bundle-version="4.10.0",
+ com.google.inject;bundle-version="3.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Automatic-Module-Name: kr.co.rtst.autosar.ap4x.ide
 Bundle-ActivationPolicy: lazy

@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -21,9 +23,9 @@ import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.FileDialog;
-import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 
 import kr.co.rtst.autosar.ap4x.ide.consts.IDEText;
 import kr.co.rtst.autosar.common.ui.util.UiUtil;
@@ -34,7 +36,7 @@ public class AdaptiveAutosarNewProjectWizardSecondPage extends WizardPage {
 	
 	private final AdaptiveAutosarProjectCreationInfo projectInfo;
 	
-	private Button btnPredefinedArxml, btnImportArxml, btnAddArxml, btnRemoveArxml;
+	private Button btnImportArxml, btnAddArxml, btnRemoveArxml;
 	private TableViewer tblArxmlList;
 	private Label lblImportArxml;
 	private List<ArxmlItem> arxmlList;
@@ -43,6 +45,8 @@ public class AdaptiveAutosarNewProjectWizardSecondPage extends WizardPage {
 		super(PAGE_NAME, "Project Configuration", null);
 		arxmlList = new ArrayList<>();
 		this.projectInfo = projectInfo;
+		setTitle(IDEText.WIZARD_SECOND_PAGE_TITLE);
+		setDescription(IDEText.WIZARD_SECOND_PAGE_MESSAGE);
 	}
 
 	@Override
@@ -59,21 +63,12 @@ public class AdaptiveAutosarNewProjectWizardSecondPage extends WizardPage {
 	}
 	
 	protected void createArxmlGroup(Composite parent) {
-		Group group = new Group(parent, SWT.NONE);
-		group.setText(IDEText.WIZARD_ARXML_GROUP_NAME);
-		group.setLayoutData(new GridData(GridData.FILL_BOTH));
-		group.setLayout(UiUtil.getGridLayoutDefault(1, false));
+//		Group group = new Group(parent, SWT.NONE);
+//		group.setText(IDEText.WIZARD_ARXML_GROUP_NAME);
+//		group.setLayoutData(new GridData(GridData.FILL_BOTH));
+//		group.setLayout(UiUtil.getGridLayoutDefault(1, false));
 
-		btnPredefinedArxml = new Button(group, SWT.CHECK);
-		btnPredefinedArxml.setText(IDEText.WIZARD_PREDEFINED_ARXML_BUTTON);
-		btnPredefinedArxml.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent e) {
-				projectInfo.setPredefinedArxml(btnPredefinedArxml.getSelection());
-			}
-		});
-		
-		btnImportArxml = new Button(group, SWT.CHECK);
+		btnImportArxml = new Button(parent, SWT.CHECK);
 		btnImportArxml.setText(IDEText.WIZARD_INPORT_ARXML_BUTTON);
 		btnImportArxml.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -82,10 +77,10 @@ public class AdaptiveAutosarNewProjectWizardSecondPage extends WizardPage {
 			}
 		});
 		
-		lblImportArxml = new Label(group, SWT.NONE);
+		lblImportArxml = new Label(parent, SWT.NONE);
 		lblImportArxml.setText(IDEText.WIZARD_INPORT_ARXML_LIST_LABEL);
 		
-		Composite compTable = new Composite(group, SWT.NONE);
+		Composite compTable = new Composite(parent, SWT.NONE);
 		compTable.setLayout(UiUtil.getGridLayoutNoMargin(2, false));
 		compTable.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
@@ -134,8 +129,8 @@ public class AdaptiveAutosarNewProjectWizardSecondPage extends WizardPage {
 							e1.printStackTrace();
 						}
 					}
-					
 					tblArxmlList.refresh();
+					updateArxmlList();
 				}
 			}
 		});
@@ -149,16 +144,24 @@ public class AdaptiveAutosarNewProjectWizardSecondPage extends WizardPage {
 						arxmlList.remove(i.next());
 					}
 					tblArxmlList.refresh();
+					updateArxmlList();
 				}
 			}
 		});
 	}
 	
 	public void init() {
-		btnPredefinedArxml.setSelection(true);
 		btnImportArxml.setSelection(true);
-		projectInfo.setPredefinedArxml(true);
 		updateArxmlImportState();
+	}
+	
+	private void updateArxmlList() {
+		TableItem[] items = tblArxmlList.getTable().getItems();
+		ArxmlItem data = null;
+		for (int i = 0; i < items.length; i++) {
+			data = (ArxmlItem)items[i].getData();
+			projectInfo.getImportArxmlList().add(data.getArxmlFile());
+		}
 	}
 	
 	private void updateArxmlImportState() {

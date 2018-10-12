@@ -1,6 +1,5 @@
 package kr.co.rtst.autosar.ap4x.ide.views.provider;
 
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -9,6 +8,7 @@ import autosar40.adaptiveplatform.applicationdesign.applicationstructure.Adaptiv
 import autosar40.adaptiveplatform.applicationdesign.portinterface.ServiceInterface;
 import autosar40.adaptiveplatform.deployment.machine.Machine;
 import autosar40.commonstructure.basetypes.BaseType;
+import gautosar.ggenericstructure.ginfrastructure.GARPackage;
 import kr.co.rtst.autosar.ap4x.core.model.IAPTopElement;
 import kr.co.rtst.autosar.ap4x.ide.IDEActivator;
 
@@ -28,11 +28,12 @@ public class AdaptiveAutosarModelLabelProvider extends LabelProvider implements 
 			return ((Machine)element).getShortName();
 		}
 		
-//		if(element instanceof GARPackage) {
+		if(element instanceof GARPackage) {
+			System.out.println("---------------------------:"+((GARPackage)element).gGetShortName());
 //			return ((GARPackage)element).gGetShortName();
-//		}else if(element instanceof AdaptiveApplicationSwComponentType) {
-//			((AdaptiveApplicationSwComponentType)element).gGetShortName();
-//		}
+		}else if(element instanceof AdaptiveApplicationSwComponentType) {
+			((AdaptiveApplicationSwComponentType)element).gGetShortName();
+		}
 		return null;
 	}
 	

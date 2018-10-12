@@ -1,6 +1,7 @@
 package kr.co.rtst.autosar.ap4x.ide.wizards;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdaptiveAutosarProjectCreationInfo {
@@ -8,6 +9,10 @@ public class AdaptiveAutosarProjectCreationInfo {
 	private String topPackageName;
 	private boolean predefinedArxml;
 	private List<File> importArxmlList;
+	
+	public AdaptiveAutosarProjectCreationInfo() {
+		this.importArxmlList = new ArrayList<>();
+	}
 	
 	public String getTopPackageName() {
 		return topPackageName;
